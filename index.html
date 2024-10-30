@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Room</title>
+<link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+	<div id="room1" class="room active">
+    <h1>Room 1: The Entrance</h1>
+    <p>You find yourself in a dark room with eerie whispers echoing around you...</p>
+    <button onclick="enterRoom('room2')">Open the Door</button>
+  </div>
+	
+	 <div class="room" id="room2">
+        <h2>Room 2: The Haunted Library</h2>
+        <p>A whisper echoes: "Answer correctly, or stay forever..."</p>
+        <p><strong>Riddle:</strong> I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
+        <input type="text" id="answer1" placeholder="Enter your answer...">
+        <button onclick="checkAnswer(1, 'echo')">Submit</button>
+        <p class="feedback" id="feedback1"></p>
+		 <a href="#room3" id="nextRoom1" class="next-room" style="display: none;"> 
+		 <button onclick="enterRoom('room3')" >Open the Door to room 3</button></a>
+        
+    </div>
+
+  <div id="room3" class="room">
+    <h1>Room 3: Hall of Shadows</h1>
+    <p>Shadows move across the walls as you step inside... <br> There are multiple doors too choose from but as the shadows get closer you <br> choose a random door</p>
+    <button onclick="enterRoom('room4')">Open the Door</button>
+  </div>
+	
+	<div class="room" id="room4">
+        <h2>Room 4: The Witch’s Lair</h2>
+        <p>A sinister laugh fills the air. Solve this, or face eternal darkness.</p>
+        <p><strong>Riddle:</strong> The more you take, the more you leave behind. What am I?</p>
+        <input type="text" id="answer2" placeholder="Enter your answer...">
+        <button onclick="checkAnswer(2, 'footsteps')">Submit</button>
+        <p class="feedback" id="feedback2"></p>
+         <a href="#room5" id="nextRoom2" class="next-room" style="display: none;"> 
+			 <button onclick="enterRoom('room5')" >Open the Door to room 5</button></a>
+    </div>
+
+  <div id="room5" class="room">
+    <h1>Room 5: The Haunted Library</h1>
+    <p>Books fall off shelves as cold air brushes past <br> causing you to run into an unknown room</p>
+    <button onclick="enterRoom('room6')">Open the Door</button>
+  </div>
+	
+	 <div class="room" id="room6">
+        <h2>Room 6: The Phantom’s Gallery</h2>
+        <p>Pictures with eyes that follow. You feel a presence...</p>
+        <p><strong>Riddle:</strong> I am always hungry, I must always be fed. The finger I touch, will soon turn red. What am I?</p>
+        <input type="text" id="answer3" placeholder="Enter your answer...">
+        <button onclick="checkAnswer(3, 'fire')">Submit</button>
+        <p class="feedback" id="feedback3"></p>
+        <a href="#room7" id="nextRoom3" class="next-room" style="display: none;">
+			<button onclick="enterRoom('room7')" >Open the Door to room 7</button></a>
+    </div>
+
+  <div id="room7" class="room">
+    <h1>Room 7: The Cellar</h1>
+    <p>A faint dripping sound fills the silence...</p>
+    <button onclick="enterRoom('room8')">Open the Door</button>
+  </div>
+
+	<div class="room" id="room8">
+        <h2>Room 8: The Vampire’s Crypt</h2>
+        <p>The air is thick and damp. Will you find your way out?</p>
+        <p><strong>Riddle:</strong> I can fly without wings. I cry without eyes. Whenever I go, darkness flies. What am I?</p>
+        <input type="text" id="answer4" placeholder="Enter your answer...">
+        <button onclick="checkAnswer(4, 'cloud')">Submit</button>
+        <p class="feedback" id="feedback4"></p>
+        <a href="#room9" id="nextRoom4" class="next-room" style="display: none;">
+			<button onclick="enterRoom('room9')" >Open the Door to room 9</button></a>
+    </div>
+	
+  <div id="room9" class="room">
+    <h1>Room 9: The Escape</h1>
+    <p>You see a window with faint moonlight shining through. This might be your way out!</p>
+	  <p><strong>Riddle:</strong> What has keys but can't open locks?</p>
+        <input type="text" id="answer5" placeholder="Enter your answer...">
+        <button onclick="checkAnswer(5, 'piano')">Submit</button>
+        <p class="feedback" id="feedback5"></p>
+        <a href="#room10" id="nextRoom5" class="next-room" style="display: none;">
+			<button onclick="enterRoom('room10')" > Open the Door</button></a>
+  </div>
+	
+	<div id="room10" class="room">
+    <h1>Outside</h1>
+    <p>Congragulations you made it outside! As you make it outside of the house you hear footsteps approaching you need to run before they keep you trapped forever</p>
+    <button onclick="launchConfetti()" style="padding: 10px 20px; font-size: 18px; cursor: pointer;">Escape!</button>
+  </div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    function enterRoom(roomId) {
+      const rooms = document.querySelectorAll('.room');
+      rooms.forEach(room => room.classList.remove('active'));
+      document.getElementById(roomId).classList.add('active');
+    }
+
+    function escape() {
+      alert("You've escaped the haunted house!");
+    }
+	  
+	  function checkAnswer(room, correctAnswer) {
+            const input = document.getElementById('answer' + room).value.toLowerCase();
+            const feedback = document.getElementById('feedback' + room);
+            const nextRoomLink = document.getElementById('nextRoom' + room);
+            const escapeText = document.querySelector('.escape-text');
+
+            if (input === correctAnswer) {
+                feedback.textContent = "Correct! Proceed to the next room.";
+                feedback.style.color = "green";
+                nextRoomLink.style.display = "inline"; // Show "Next Room" link
+
+                if (room === 5) {
+                    escapeText.style.display = "block"; // Show escape message in Room 5
+                }
+            } else {
+                feedback.textContent = "Wrong answer. Try again.";
+                feedback.style.color = "red";
+            }
+        }
+	  function launchConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+  </script>
+</body>
+</html>
